@@ -1,13 +1,17 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.6.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.5.4.RELEASE'
+    }
+    repositories {
+//		mavenCentral()
+        maven {
+            url "http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/central/"
+        }
+
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -17,18 +21,35 @@ apply plugin: 'org.springframework.boot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+springBoot {
+    executable = true
+}
+
+jar {
+    baseName = 'KickerScorerates'
+}
+
+
 repositories {
-	mavenCentral()
+//	mavenCentral()
+    maven {
+        url "http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/central/"
+    }
+    mavenLocal()
 }
 
 
 dependencies {
 
-//	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 //	compile('org.springframework.boot:spring-boot-starter-security')
-//	compile('org.springframework.boot:spring-boot-starter-data-rest')
-	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('org.springframework.boot:spring-boot-starter-web')
+//    compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
+    compile('ru.rabot9ga:RestTemplates:1.0.0-SNAPSHOT') {
+        changing = true
+    }
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
 }

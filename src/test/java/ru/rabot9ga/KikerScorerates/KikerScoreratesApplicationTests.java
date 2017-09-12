@@ -1,4 +1,4 @@
-package ru.rabot9ga.KikerScorerates;
+package ru.rabot9ga.kikerScorerates;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +9,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class KikerScoreratesApplicationTests {
 
+
+
 	@Test
 	public void contextLoads() {
 	}
+
 
 }

@@ -1,109 +1,56 @@
 package ru.rabot9ga.kikerScorerates.entity;
 
 
-import commons.Role;
+import lombok.Builder;
+import lombok.Data;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.*;
 
+@Data
+@Builder
+@ApiObject(name = "MongoGame")
 public class MongoGame {
 
     @Id
+    @ApiObjectField(order = 1)
     private String id;
-    private int scoreTeam1;
-    private int scoreTeam2;
 
+    @ApiObjectField(order = 2)
     @CreatedDate
+    @Builder.Default
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdDate = LocalDateTime.now();
 
+    @ApiObjectField(order = 3)
+    private int scoreTeam1;
+    @ApiObjectField(order = 4)
+    private int scoreTeam2;
+
+
+    @ApiObjectField
     @DBRef
-    private List<MongoTeam> mongoTeams;
+    private MongoPlayer defenderTeam1;
 
-    private Map<String, Role> mapPlayerIDRole;
+    @ApiObjectField
+    @DBRef
+    private MongoPlayer defenderTeam2;
 
-    public String getId() {
-        return id;
-    }
+    @ApiObjectField
+    @DBRef
+    private MongoPlayer attackerTeam1;
 
-    public MongoGame setId(String id) {
-        this.id = id;
-        return this;
-    }
+    @ApiObjectField
+    @DBRef
+    private MongoPlayer attackerTeam2;
 
-    public int getScoreTeam1() {
-        return scoreTeam1;
-    }
+    @ApiObjectField
+    @DBRef
+    private MongoKickerTable mongoKickerTable;
 
-    public MongoGame setScoreTeam1(int scoreTeam1) {
-        this.scoreTeam1 = scoreTeam1;
-        return this;
-    }
-
-    public int getScoreTeam2() {
-        return scoreTeam2;
-    }
-
-    public MongoGame setScoreTeam2(int scoreTeam2) {
-        this.scoreTeam2 = scoreTeam2;
-        return this;
-    }
-
-    public List<MongoTeam> getMongoTeams() {
-        return mongoTeams;
-    }
-
-    public MongoGame setMongoTeams(List<MongoTeam> mongoTeams) {
-        this.mongoTeams = mongoTeams;
-        return this;
-    }
-
-    public Map<String, Role> getMapPlayerIDRole() {
-        return mapPlayerIDRole;
-    }
-
-    public MongoGame setMapPlayerIDRole(Map<String, Role> mapPlayerIDRole) {
-        this.mapPlayerIDRole = mapPlayerIDRole;
-        return this;
-    }
-
-    public MongoGame setPlayerIDRole(String playerID, Role role) {
-        if (this.mapPlayerIDRole == null) {
-            this.mapPlayerIDRole = new HashMap<>();
-        }
-        this.mapPlayerIDRole.put(playerID, role);
-        return this;
-    }
-
-    public MongoGame setMongoTeam(MongoTeam team) {
-        if (this.mongoTeams == null) {
-            this.mongoTeams = new ArrayList<>();
-        }
-        this.mongoTeams.add(team);
-        return this;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public MongoGame setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("MongoGame{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", scoreTeam1=").append(scoreTeam1);
-        sb.append(", scoreTeam2=").append(scoreTeam2);
-        sb.append(", createdDate=").append(createdDate);
-        sb.append(", mongoTeams=").append(mongoTeams);
-        sb.append(", mapPlayerIDRole=").append(mapPlayerIDRole);
-        sb.append('}');
-        return sb.toString();
-    }
 }

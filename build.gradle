@@ -1,5 +1,5 @@
 group 'ru.rabot9ga'
-version '1.0.0-SNAPSHOT'
+version '1.0.0'
 
 buildscript {
     ext {
@@ -12,13 +12,14 @@ buildscript {
     dependencies {
         classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.+')
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
 //        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
     }
 }
 
 
 apply plugin: 'java'
-//apply plugin: 'idea'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
@@ -42,40 +43,20 @@ dependencies {
 //	compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-    compile('ru.rabot9ga:KickerScoreratesApi:1.0.0-SNAPSHOT')
 
+    compile('org.jsondoc:spring-boot-starter-jsondoc:1.2.17')
+    compile('org.jsondoc:jsondoc-ui-webjar:1.2.17')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compileOnly('org.projectlombok:lombok:1.16.18')
+
+    testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 }
-
-artifactory {
-    contextUrl = 'http://ih639619.vds.myihor.ru:8081/artifactory'
-    publish {
-        repository {
-            repoKey = 'gradle-dev-local' // The Artifactory repository key to publish to
-            username = "${artifactory_user}" // The publisher user name
-            password = "${artifactory_password}" // The publisher password
-        }
-        defaults {
-            // Reference to Gradle publications defined in the build script.
-            // This is how we tell the Artifactory Plugin which artifacts should be
-            // published to Artifactory.
-            publications('mavenJava')
-            publishArtifacts = true
-            // Properties to be attached to the published artifacts.
-            properties = ['qa.level': 'basic', 'dev.team' : 'core']
-            // Publish generated POM files to Artifactory (true by default)
-            publishPom = true
-        }
-    }
-
-    resolve {
-        repoKey = 'gradle-dev'
-        username = "${artifactory_user}"
-        password = "${artifactory_password}"
-    }
+repositories {
+    jcenter()
 }
+
 
 
 

@@ -14,25 +14,32 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@RequestMapping("/game")
 @Slf4j
 public class GameController {
 
     @Autowired
     private GameRepository gameRepository;
 
-    @RequestMapping("/getAllGames")
-    public List<MongoGame> getAllGames(){
+    @RequestMapping("/getAll")
+    public List<MongoGame> getAllGames() {
         return gameRepository.findAll();
     }
 
     @RequestMapping("/getGameByCreatedDateBetween")
     public List<MongoGame> getGameByCreatedDateBetween(
-            @RequestParam(value = "from")LocalDateTime timeFrom,
-            @RequestParam(value = "to")LocalDateTime timeTo){
+            @RequestParam(value = "from") LocalDateTime timeFrom,
+            @RequestParam(value = "to") LocalDateTime timeTo) {
         return gameRepository.findByCreatedDateBetween(timeFrom, timeTo);
     }
 
-    @RequestMapping(value = "/createGame", method = RequestMethod.POST)
+    @RequestMapping("/getByID")
+    public MongoGame getByID(@RequestParam(value = "id") String id) {
+        return gameRepository.findOne(id);
+    }
+
+
+    @RequestMapping(value = "/createGame", method = RequestMethod.PUT)
     public CreateGameRs createGame(@RequestBody CreateGameRq createGameRq) {
         log.debug("/createGame - {}", createGameRq);
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/kickerTable")
 @Slf4j
 public class KickerTableController {
 
@@ -17,28 +18,27 @@ public class KickerTableController {
     private KickerTableRepository kickerTableRepository;
 
 
-    @RequestMapping("/getAllKickerTables")
+    @RequestMapping("/getAll")
     public List<MongoKickerTable> getAllKickerTables(){
         return kickerTableRepository.findAll();
     }
 
-    @RequestMapping("/getKickerTableByName")
-    public MongoKickerTable getKickerTableByName(@RequestParam(value = "name") String name){
-        return kickerTableRepository.findByName(name);
+    @RequestMapping("/getByID")
+    public MongoKickerTable getByID(@RequestParam(value = "id") String id) {
+        return kickerTableRepository.findOne(id);
+    }
+
+    @RequestMapping("/getTablesByName")
+    public List<MongoKickerTable> getKickerTableByName(@RequestBody List<String> names){
+        return names.stream().map(s -> kickerTableRepository.findByName(s)).collect(Collectors.toList());
     }
 
 
-    @RequestMapping(value = "/createKickerTable", method = RequestMethod.PUT)
-    public MongoKickerTable createKickerTable(@RequestParam(value = "name") String name){
-        return kickerTableRepository.save(MongoKickerTable.builder().name(name).build());
-    }
-
-    @RequestMapping(value = "/createKickerTables", method = RequestMethod.PUT)
+    @RequestMapping(value = "/createTables", method = RequestMethod.PUT)
     public List<MongoKickerTable> createKickerTables(@RequestBody List<String> names){
         List<MongoKickerTable> kickerTableList = names.stream()
                 .map(s -> MongoKickerTable.builder().name(s).build())
                 .collect(Collectors.toList());
-
         return kickerTableRepository.save(kickerTableList);
     }
 }

@@ -10,29 +10,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/player")
 @Slf4j
 public class PlayerController {
 
     @Autowired
     private PlayerRepository playerRepository;
 
-    @RequestMapping("/getAllPlayers")
+    @RequestMapping("/getAll")
     public List<MongoPlayer> getAllPlayers() {
         return playerRepository.findAll();
     }
 
-    @RequestMapping("/getPlayer")
-    public MongoPlayer getPlayer(@RequestParam(value = "name") String name) {
-        return playerRepository.findByName(name);
+    @RequestMapping("/getByID")
+    public MongoPlayer getByID(@RequestParam(value = "id") String id) {
+        return playerRepository.findOne(id);
     }
 
-    @RequestMapping(value = "/getPlayersByNames", method = RequestMethod.POST)
-    public List<MongoPlayer> getPlayersByNames(@RequestBody List<String> names) {
+    @RequestMapping(value = "/getByNames", method = RequestMethod.GET)
+    public List<MongoPlayer> getPlayersByNames(@RequestParam(value = "names") List<String> names) {
         return names.stream().map(s -> playerRepository.findByName(s)).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/createPlayer", method = RequestMethod.PUT)
-    public MongoPlayer createPlayer(@RequestParam(value = "name") String name){
+    public MongoPlayer createPlayer(@RequestBody String name){
         MongoPlayer mongoPlayer = MongoPlayer.builder()
                 .name(name)
                 .build();

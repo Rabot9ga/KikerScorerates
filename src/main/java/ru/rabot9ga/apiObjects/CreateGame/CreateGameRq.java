@@ -12,9 +12,9 @@ import ru.rabot9ga.kikerScorerates.entity.MongoPlayer;
 @Builder
 @ApiObject(name = "CreateGameRq", group = "CreateGame")
 public class CreateGameRq {
-    @ApiObjectField
+    @ApiObjectField(required = true)
     private MongoPlayer attackerTeam1;
-    @ApiObjectField
+    @ApiObjectField(required = true)
     private MongoPlayer attackerTeam2;
     @ApiObjectField
     private MongoPlayer defenderTeam1;

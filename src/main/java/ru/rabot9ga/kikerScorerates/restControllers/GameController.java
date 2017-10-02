@@ -42,6 +42,7 @@ public class GameController {
         return gameRepository.findOne(id);
     }
 
+    // TODO: 02.10.2017 Добавить в запрос параметр время игры (опциональный)
     @RequestMapping(value = "/createGame", method = RequestMethod.PUT)
     public CreateGameRs createGame(@RequestBody CreateGameRq createGameRq) {
         log.debug("/createGame - {}", createGameRq);
@@ -66,7 +67,6 @@ public class GameController {
 
         if (mongoGame.getId() != null) {
 
-            calcRatingPlayers.addGameTOCalcStatistic(mongoGame);
             log.debug("Game created, {}", mongoGame.toString());
             return CreateGameRs.builder()
                     .status(Status.SUCCESS)

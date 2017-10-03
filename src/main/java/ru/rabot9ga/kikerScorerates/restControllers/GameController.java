@@ -9,7 +9,6 @@ import ru.rabot9ga.apiObjects.commons.Status;
 import ru.rabot9ga.kikerScorerates.entity.MongoGame;
 import ru.rabot9ga.kikerScorerates.entity.MongoPlayer;
 import ru.rabot9ga.kikerScorerates.repositories.GameRepository;
-import ru.rabot9ga.kikerScorerates.statistics.CalcRatingPlayers;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +21,6 @@ public class GameController {
     @Autowired
     private GameRepository gameRepository;
 
-    @Autowired
-    private CalcRatingPlayers calcRatingPlayers;
 
     @RequestMapping("/getAll")
     public List<MongoGame> getAllGames() {

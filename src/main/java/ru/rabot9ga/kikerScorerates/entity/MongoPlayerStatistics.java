@@ -34,4 +34,11 @@ public class MongoPlayerStatistics {
         allGames = winGames + looseGames;
         winPercent = (((double) winGames) / (double) allGames) * 100;
     }
+
+    public void clearStat(){
+        winPercent = 0;
+        winGames = 0;
+        looseGames = 0;
+        allGames = 0;
+    }
 }

@@ -32,13 +32,7 @@ public class CalcRating implements Runnable {
         allGames.forEach(mongoGame -> log.trace(mongoGame.toString()));
 
         List<MongoPlayerStatistics> allStatistic = playerStatisticsRepository.findAll();
-        allStatistic.forEach(playerStatistics -> {
-            playerStatistics.setWinGames(0);
-            playerStatistics.setLooseGames(0);
-            playerStatistics.setWinPercent(0);
-            playerStatistics.setAllGames(0);
-        });
-        allStatistic.forEach(playerStatistics -> log.trace(playerStatistics.toString()));
+        allStatistic.forEach(MongoPlayerStatistics::clearStat);
 
         Map<String, MongoPlayerStatistics> mapPlayerIDStat = allStatistic.stream()
                 .collect(Collectors.toMap(o -> o.getPlayer().getId(), o -> o));

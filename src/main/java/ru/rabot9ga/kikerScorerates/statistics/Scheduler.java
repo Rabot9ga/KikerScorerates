@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
-public class CalcRatingPlayers {
+public class Scheduler {
 
     @Autowired
     private CalcRating calcRating;

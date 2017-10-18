@@ -22,7 +22,7 @@ public class Scheduler {
 
     @PostConstruct
     public void initCalcStat() {
-        service.scheduleWithFixedDelay(calcRating, 10, 1, TimeUnit.SECONDS);
+        service.scheduleWithFixedDelay(calcRating, 10, 30, TimeUnit.SECONDS);
     }
 
 

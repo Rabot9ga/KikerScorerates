@@ -1,15 +1,46 @@
 <!doctype html>
 <html ng-app="demo">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Hello AngularJS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script src="hello.js"></script>
 </head>
 
 <body>
-<div ng-controller="Hello">
-    <p>The ID is {{greeting.id}}</p>
-    <p>The content is {{greeting.name}}</p>
+<h3>Добавить игру</h3>
+
+
+
+<div ng-controller="getAllPlayers">
+    <p>Команда 1 Счет: <input type="number" ng-maxlength="2" ng-model="score1"></p>
+    <p>Нападение
+        <label>
+            <select ng-model="attacker1" ng-options="x.name for x in players">
+            </select>
+        </label>Защита
+        <label>
+            <select ng-model="defender1" ng-options="x.name for x in players">
+            </select>
+        </label></p>
+
+    <p>Команда 2 Счет: <input type="number" ng-maxlength="2" ng-model="score2"></p>
+    <p>Нападение
+        <label>
+            <select ng-model="attacker2" ng-options="x.name for x in players">
+            </select>
+        </label>Защита
+        <label>
+            <select ng-model="defender2" ng-options="x.name for x in players">
+            </select>
+        </label></p>
+    <button ng-click="clickCreateGame(attacker1, attacker2, defender1, defender2, score1, score2)">Создать игру</button>
 </div>
+<div ng-controller="CreateGame">
+    <button ng-click="clickCreateGame(attacker1, attacker2, defender1, defender2, score1, score2)">Создать игру</button>
+</div>
+
+
+
 </body>
 </html>

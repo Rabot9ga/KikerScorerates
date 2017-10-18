@@ -12,6 +12,8 @@ import ru.rabot9ga.kikerScorerates.repositories.PlayerStatisticsRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,6 +25,8 @@ public class CalcRating implements Runnable {
     @Autowired
     private PlayerStatisticsRepository playerStatisticsRepository;
 
+    // TODO: 06.10.2017 добавить очередь новых игр для расчета статистики
+    private BlockingQueue<MongoGame> queue = new ArrayBlockingQueue<>(100);
 
     @Override
     public void run() {

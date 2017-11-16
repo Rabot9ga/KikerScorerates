@@ -1,1 +1,1 @@
-# KikerScorerates [!(https://travis-ci.org/Rabot9ga/KikerScorerates.svg?branch=v0.0.1)]
+# KikerScorerates ![Travis CI](https://travis-ci.org/Rabot9ga/KikerScorerates.svg?branch=v0.0.1)

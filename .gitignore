@@ -1,8 +1,6 @@
 .idea/
-.gradle/
 *.iml
 out/
-gradle/
 build/libs/KikerScorerates-1.0.0.jar.original
 build/reports/
 build/resources/

@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 public class MongoPlayerStatistics {
@@ -32,7 +34,7 @@ public class MongoPlayerStatistics {
 
     private void calcOther() {
         allGames = winGames + looseGames;
-        winPercent = (((double) winGames) / (double) allGames) * 100;
+        winPercent = BigDecimal.valueOf((((double) winGames) / (double) allGames) * 100).setScale(2, BigDecimal.ROUND_HALF_DOWN).doubleValue();
     }
 
     public void clearStat(){

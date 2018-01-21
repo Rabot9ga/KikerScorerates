@@ -1,46 +1,158 @@
 <!doctype html>
-<html ng-app="demo">
+<html ng-app="kicker">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Hello AngularJS</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <script src="hello.js"></script>
+    <title>Kicker Scorerates</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-<h3>Добавить игру</h3>
+
+<div class="container">
+    <header>
+        <img src="logo.jpg" style="height: 150px"/>
+        <h2>Kicker Scorerates</h2><span>v0.1</span>
+    </header>
+
+    <nav class="nav nav-pills" id="myTab" role="tablist">
+        <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+           aria-controls="nav-home" aria-selected="false">Home</a>
+
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-add-game" role="tab"
+           aria-controls="nav-add-game" aria-selected="true">Add game</a>
+
+        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-add-player" role="tab"
+           aria-controls="nav-add-player" aria-selected="false">Add player</a>
+
+    </nav>
 
 
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div ng-controller="getRatings">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Win Percent</th>
+                        <th>Win Games</th>
+                        <th>Loose Games</th>
+                        <th>All Games</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="x in ratings">
+                        <td>{{ x.player.name }}</td>
+                        <td>{{ x.winPercent }}</td>
+                        <td>{{ x.winGames }}</td>
+                        <td>{{ x.looseGames }}</td>
+                        <td>{{ x.allGames }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary"
+                        ng-click="getRatings()">
+                    Update
+                </button>
+            </div>
+        </div>
 
-<div ng-controller="getAllPlayers">
-    <p>Команда 1 Счет: <input type="number" ng-maxlength="2" ng-model="score1"></p>
-    <p>Нападение
-        <label>
-            <select ng-model="attacker1" ng-options="x.name for x in players">
-            </select>
-        </label>Защита
-        <label>
-            <select ng-model="defender1" ng-options="x.name for x in players">
-            </select>
-        </label></p>
+        <div class="tab-pane fade show active" id="nav-add-game" role="tabpanel" aria-labelledby="nav-add-game-tab">
+            <div ng-controller="getAllPlayers">
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="labelTeam1">Команда 1:</label>
+                    <input type="number" min="0" max="10" step="1" style="width: 70px"
+                           class="form-control mb-2 mr-sm-2 mb-sm-0" id="labelTeam1" ng-maxlength="2"
+                           ng-model="score1"/>
+                </form>
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="att1">Нападение</label>
+                    <select class="custom-select mb-4 mr-sm-2 mb-sm-0" id="att1" ng-model="attacker1"
+                            ng-options="x.name for x in players">
+                    </select>
 
-    <p>Команда 2 Счет: <input type="number" ng-maxlength="2" ng-model="score2"></p>
-    <p>Нападение
-        <label>
-            <select ng-model="attacker2" ng-options="x.name for x in players">
-            </select>
-        </label>Защита
-        <label>
-            <select ng-model="defender2" ng-options="x.name for x in players">
-            </select>
-        </label></p>
-    <button ng-click="clickCreateGame(attacker1, attacker2, defender1, defender2, score1, score2)">Создать игру</button>
+                    <label class="mr-sm-2" for="def1">Защита</label>
+                    <select class="custom-select mb-4 mr-sm-2 mb-sm-0" id="def1" ng-model="defender1"
+                            ng-options="x.name for x in players">
+                    </select>
+                </form>
+
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="labelTeam2">Команда 2:</label>
+                    <input type="number" min="0" max="10" step="1" style="width: 70px"
+                           class="form-control mb-2 mr-sm-2 mb-sm-0" id="labelTeam2" ng-maxlength="2"
+                           ng-model="score2"/>
+                </form>
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="att1">Нападение</label>
+                    <select class="custom-select mb-4 mr-sm-2 mb-sm-0" id="att2" ng-model="attacker2"
+                            ng-options="x.name for x in players">
+                    </select>
+
+                    <label class="mr-sm-2" for="def1">Защита</label>
+                    <select class="custom-select mb-4 mr-sm-2 mb-sm-0" id="def2" ng-model="defender2"
+                            ng-options="x.name for x in players">
+                    </select>
+                </form>
+                <button type="button" class="btn btn-primary"
+                        ng-click="clickCreateGame(attacker1, attacker2, defender1, defender2, score1, score2)">
+                    Создать игру
+                </button>
+
+                <div ng-show="success" class="alert alert-success">
+                    <strong>Success!</strong> Game created.
+                </div>
+
+
+                <div ng-show="fail" class="alert alert-warning">
+                    <strong>Warning!</strong> Something went wrong.
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="nav-add-player" role="tabpanel" aria-labelledby="add-player-tab">
+            <div ng-controller="createPlayer">
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="labelPlayer">Имя :</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="labelPlayer"
+                           ng-model="name"/>
+                </form>
+                <button type="button" class="btn btn-primary"
+                        ng-click="createPlayer(name)">
+                    Создать игрока
+                </button>
+
+                <div ng-show="success" class="alert alert-success">
+                    <strong>Success!</strong> Player created.
+                </div>
+
+
+                <div ng-show="fail" class="alert alert-warning">
+                    <strong>Warning!</strong> Something went wrong.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div ng-controller="CreateGame">
-    <button ng-click="clickCreateGame(attacker1, attacker2, defender1, defender2, score1, score2)">Создать игру</button>
-</div>
 
-
+<footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</footer>
 
 </body>
 </html>

@@ -2,6 +2,7 @@ package ru.rabot9ga.kikerScorerates.restControllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rabot9ga.kikerScorerates.entity.MongoPlayerStatistics;
@@ -19,7 +20,7 @@ public class PlayerStatisticsController {
 
     @RequestMapping("/getPlayersRating")
     public List<MongoPlayerStatistics> getPlayersRating(){
-        log.debug("");
-        return playerStatisticsRepository.findAll();
+
+        return playerStatisticsRepository.findAll(new Sort(Sort.Direction.DESC, "winPercent"));
     }
 }

@@ -2,6 +2,8 @@ package ru.rabot9ga.kikerScorerates.restControllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 import ru.rabot9ga.apiObjects.CreateGame.CreateGameRq;
 import ru.rabot9ga.apiObjects.CreateGame.CreateGameRs;
@@ -21,6 +23,8 @@ public class GameController {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @RequestMapping("/getAll")
     public List<MongoGame> getAllGames() {
@@ -40,6 +44,8 @@ public class GameController {
     }
 
     // TODO: 02.10.2017 Добавить в запрос параметр время игры (опциональный)
+
+
     @RequestMapping(value = "/createGame", method = RequestMethod.PUT)
     public CreateGameRs createGame(@RequestBody CreateGameRq createGameRq) {
         log.debug("/createGame - {}", createGameRq);
@@ -56,8 +62,10 @@ public class GameController {
                 .defenderTeam2(createGameRq.getDefenderTeam2())
                 .scoreTeam1(createGameRq.getScoreTeam1())
                 .scoreTeam2(createGameRq.getScoreTeam2())
-                .mongoKickerTable(createGameRq.getKickerTable())
+//                .mongoKickerTable(createGameRq.getKickerTable())
                 .build();
+
+
         log.debug(mongoGame.toString());
 
         gameRepository.save(mongoGame);

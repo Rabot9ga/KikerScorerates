@@ -21,8 +21,8 @@ public class CreateGameRq {
     @ApiObjectField
     private MongoPlayer defenderTeam2;
 
-    @ApiObjectField(required = true)
-    private MongoKickerTable kickerTable;
+//    @ApiObjectField(required = true)
+//    private MongoKickerTable kickerTable;
     @ApiObjectField(required = true)
     private int scoreTeam1;
     @ApiObjectField(required = true)

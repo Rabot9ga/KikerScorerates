@@ -2,6 +2,7 @@ package ru.rabot9ga.kikerScorerates.restControllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.rabot9ga.kikerScorerates.entity.MongoPlayer;
 import ru.rabot9ga.kikerScorerates.repositories.PlayerRepository;
@@ -33,11 +34,15 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/createPlayer", method = RequestMethod.PUT)
-    public MongoPlayer createPlayer(@RequestBody String name){
-        MongoPlayer mongoPlayer = MongoPlayer.builder()
-                .name(name)
-                .build();
-        return playerRepository.save(mongoPlayer);
+    public ResponseEntity<MongoPlayer> createPlayer(@RequestBody String name){
+        MongoPlayer player = playerRepository.findByName(name);
+        if (player == null) {
+            MongoPlayer mongoPlayer = MongoPlayer.builder()
+                    .name(name)
+                    .build();
+            player = playerRepository.save(mongoPlayer);
+        }
+        return ResponseEntity.ok(player);
     }
 
     @RequestMapping(value = "/createPlayers", method = RequestMethod.PUT)

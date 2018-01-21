@@ -2,6 +2,7 @@ package ru.rabot9ga.kikerScorerates.restControllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.rabot9ga.kikerScorerates.entity.MongoKickerTable;
 import ru.rabot9ga.kikerScorerates.repositories.KickerTableRepository;
@@ -33,6 +34,14 @@ public class KickerTableController {
         return names.stream().map(s -> kickerTableRepository.findByName(s)).collect(Collectors.toList());
     }
 
+    @RequestMapping(value = "/createTable", method = RequestMethod.PUT)
+    public ResponseEntity<MongoKickerTable> createKickerTable(@RequestBody String name){
+        MongoKickerTable kickerTable = kickerTableRepository.findByName(name);
+        if (kickerTable == null){
+            kickerTable = kickerTableRepository.save(MongoKickerTable.builder().name(name).build());
+        }
+        return ResponseEntity.ok(kickerTable);
+    }
 
     @RequestMapping(value = "/createTables", method = RequestMethod.PUT)
     public List<MongoKickerTable> createKickerTables(@RequestBody List<String> names){

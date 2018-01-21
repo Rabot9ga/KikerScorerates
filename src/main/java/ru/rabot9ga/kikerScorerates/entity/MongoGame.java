@@ -8,6 +8,7 @@ import org.jsondoc.core.annotation.ApiObjectField;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @ApiObject(name = "MongoGame")
+@Document
 public class MongoGame {
 
     @Id

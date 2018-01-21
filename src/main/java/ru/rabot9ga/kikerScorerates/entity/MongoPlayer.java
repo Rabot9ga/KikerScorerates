@@ -6,10 +6,12 @@ import org.jsondoc.core.annotation.ApiObject;
 import org.jsondoc.core.annotation.ApiObjectField;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @ApiObject(name = "MongoPlayer")
 @Data
 @Builder
+@Document
 public class MongoPlayer {
     @Id
     @ApiObjectField(description = "Id in mongo DB")
